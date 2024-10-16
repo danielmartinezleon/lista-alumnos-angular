@@ -1,13 +1,18 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div>
+  <mat-checkbox (change)="toggleColumn($event, 'id')" checked>ID</mat-checkbox>
+  <mat-checkbox (change)="toggleColumn($event, 'nombre')" checked>Nombre</mat-checkbox>
+  <mat-checkbox (change)="toggleColumn($event, 'apellido')" checked>Apellido</mat-checkbox>
+  <mat-checkbox (change)="toggleColumn($event, 'nif')" checked>NIF</mat-checkbox>
+  <mat-checkbox (change)="toggleColumn($event, 'edad')" checked>Edad</mat-checkbox>
+  <mat-checkbox (change)="toggleColumn($event, 'curso')" checked>Curso</mat-checkbox>
+</div>
 
-    <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let alumno"> {{alumno.id}} </td>
-      </ng-container>
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let alumno"> {{alumno.nombre}} </td>
-      </ng-container>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container *ngFor="let column of allColumns" [matColumnDef]="column">
+    <th mat-header-cell *matHeaderCellDef [class.hidden]="!isColumnVisible(column)"> {{ column | titlecase }} </th>
+    <td mat-cell *matCellDef="let alumno" [class.hidden]="!isColumnVisible(column)"> {{ alumno[column] }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="allColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: allColumns;"></tr>
 </table>
-  
-  

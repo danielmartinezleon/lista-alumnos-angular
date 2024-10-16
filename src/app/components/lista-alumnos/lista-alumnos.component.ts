@@ -37,6 +37,33 @@ const LISTA_ALUMNOS: Alumno[] = [
 })
 
 export class ListaAlumnosComponent {
-  displayedColumns: string[] = ['id', 'nombre', 'apellido', 'nif', 'edad', 'curso'];
+  allColumns: string[] = ['id', 'nombre', 'apellido', 'nif', 'edad', 'curso'];
+  displayedColumns: string[] = [...this.allColumns];
   dataSource = LISTA_ALUMNOS;
+
+  toggleColumn(event: any, column: string) {
+    if (event.checked) {
+      this.addColumn(column);
+    } else {
+      this.removeColumn(column);
+    }
+  }
+
+  addColumn(column: string) {
+    if (!this.displayedColumns.includes(column)) {
+      this.displayedColumns.push(column);
+    }
+  }
+
+  removeColumn(column: string) {
+    const index = this.displayedColumns.indexOf(column);
+    if (index > -1) {
+      this.displayedColumns.splice(index, 1);
+    }
+  }
+
+  isColumnVisible(column: string): boolean {
+    return this.displayedColumns.includes(column);
+  }
+  
 }
